@@ -4,19 +4,19 @@
 \alias{gen_pop}
 \title{Generate population for data simulation}
 \usage{
-gen_pop(design_args, fixed_ranges = NULL, var_range = c(0, 3),
-  err_range = c(1, 3), n_subj = NULL)
+gen_pop(design_args, n_subj = NULL, fixed_ranges = NULL, var_range = c(0,
+  3), err_range = c(1, 3))
 }
 \arguments{
 \item{design_args}{list specifying experimental design (see \code{\link{stim_lists}}); for best results, n_item should be 2*minimum number of items needed for the design}
+
+\item{n_subj}{number of subjects (for defining random effects structure; for best results, should be 2*number of stimulus lists}
 
 \item{fixed_ranges}{list of 2-element vectors (min, max) defining ranges of fixed effect parameters}
 
 \item{var_range}{2-element vector defining range (min, max) of random effect variances}
 
 \item{err_range}{2-element vector defining range of error variance}
-
-\item{n_subj}{number of subjects (for defining random effects structure; for best results, should be 2*number of stimulus lists}
 }
 \value{
 list with parameters for data generation
@@ -26,7 +26,7 @@ Generate population for data simulation
 }
 \examples{
 dargs <- list(ivs = c(A = 2, B = 2), n_item = 8)
-gen_pop(dargs, n_subj = 8)
+gen_pop(dargs, 8)
 }
 \seealso{
 \code{\link{sim_norm}}
