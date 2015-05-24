@@ -188,7 +188,7 @@ The design below is a 3-way design based on Gann & Barr (2014).
                        Addressee = c("Same", "Diff"),
                        Feedback = c("Yes", "No")),
                    between_subj = c("Addressee"),
-									 between_item = c("Feedback"),
+                   between_item = c("Feedback"),
                    n_item = 16)
 
   stim_lists(threeway)
