@@ -1,0 +1,10 @@
+Package: funfact
+Title: Functions for factorial experiments
+Description: Provides functionality for planning and analyzing
+        factorially-designed experiments involving sampling of subjects
+        and stimulus materials (items).
+Version: 0.1
+License: GPL-2
+Author: Dale J. Barr <dalejbarr3@gmail.com>
+Maintainer: Dale J. Barr <dalejbarr3@gmail.com>
+Imports: clusterGeneration, MASS
