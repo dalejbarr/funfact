@@ -43,10 +43,7 @@ For information on how these elements should be defined, see the examples in the
   library("funfact")
 #+END_SRC
 
-The function =stim_lists()= generates a set of counterbalanced
-stimulus presentation lists for any given (full) factorial design.  A
-"stimulus presentation list" determines which items will be presented
-to a given subject, and in which condition.  The generation process ensures that each subject seems the same number of items, and the same number of items in each condition, and also that each item is presented the same number of times in each condition across subjects.
+The function =stim_lists()= generates a set of counterbalanced stimulus presentation lists for any given (full) factorial design.  A "stimulus presentation list" determines which items will be presented to a given subject, and in which condition.  The generation process ensures that each subject seems the same number of items as well as the same number of items in each condition.  It also ensures that each item is presented the same number of times, in each condition, across subjects.
 
 You determine the experiment design by specifying arguments within a list object.
 
@@ -361,72 +358,72 @@ The functions =gen_pop()= and =sim_norm()= can be used to simulate data from any
 #+END_SRC
 
 #+RESULTS:
-| subj_id | list_id | item_id | A  | B  |                  Y |
-|---------+---------+---------+----+----+--------------------|
-|       1 |       2 |       1 | A1 | B2 |   1.18600864431848 |
-|       1 |       2 |       2 | A1 | B2 |   2.19650762624285 |
-|       1 |       2 |       3 | A2 | B1 |  0.078133933193419 |
-|       1 |       2 |       4 | A2 | B1 |   1.88195186566249 |
-|       1 |       2 |       5 | A2 | B2 |   1.74439667961584 |
-|       1 |       2 |       6 | A2 | B2 |  0.470407667208009 |
-|       1 |       2 |       7 | A1 | B1 |   2.51912645121071 |
-|       1 |       2 |       8 | A1 | B1 |   2.73964717605434 |
-|       2 |       1 |       1 | A1 | B1 | -0.683713178385101 |
-|       2 |       1 |       2 | A1 | B1 |   4.77150835964478 |
-|       2 |       1 |       3 | A1 | B2 | 0.0802398798730475 |
-|       2 |       1 |       4 | A1 | B2 |  -2.37132166411036 |
-|       2 |       1 |       5 | A2 | B1 |   1.15512845339793 |
-|       2 |       1 |       6 | A2 | B1 |   1.85556183162729 |
-|       2 |       1 |       7 | A2 | B2 |   2.70712977022336 |
-|       2 |       1 |       8 | A2 | B2 |   4.89597462765518 |
-|       3 |       3 |       1 | A2 | B1 |   2.00232734810404 |
-|       3 |       3 |       2 | A2 | B1 |   2.10402258686101 |
-|       3 |       3 |       3 | A2 | B2 |   3.62324588303818 |
-|       3 |       3 |       4 | A2 | B2 |   4.56353936813392 |
-|       3 |       3 |       5 | A1 | B1 | -0.291744260820948 |
-|       3 |       3 |       6 | A1 | B1 |   2.84612787456946 |
-|       3 |       3 |       7 | A1 | B2 | -0.225686248361752 |
-|       3 |       3 |       8 | A1 | B2 | -0.946763706208223 |
-|       4 |       4 |       1 | A2 | B2 |   1.29117832529211 |
-|       4 |       4 |       2 | A2 | B2 |   4.89207230601347 |
-|       4 |       4 |       3 | A1 | B1 | 0.0978992480601388 |
-|       4 |       4 |       4 | A1 | B1 |   2.56249616518278 |
-|       4 |       4 |       5 | A1 | B2 |   2.66838987412273 |
-|       4 |       4 |       6 | A1 | B2 |  -1.79901521573805 |
-|       4 |       4 |       7 | A2 | B1 |  0.140685433517426 |
-|       4 |       4 |       8 | A2 | B1 |   1.70401022002006 |
-|       5 |       4 |       1 | A2 | B2 |    4.1815507283982 |
-|       5 |       4 |       2 | A2 | B2 |   4.81804617841164 |
-|       5 |       4 |       3 | A1 | B1 |   1.51569797693389 |
-|       5 |       4 |       4 | A1 | B1 |   -1.1999307081188 |
-|       5 |       4 |       5 | A1 | B2 |  0.926871657121788 |
-|       5 |       4 |       6 | A1 | B2 |  -3.71646305404236 |
-|       5 |       4 |       7 | A2 | B1 |   1.30292996973742 |
-|       5 |       4 |       8 | A2 | B1 |   2.27357042368619 |
-|       6 |       1 |       1 | A1 | B1 |   5.66973960806689 |
-|       6 |       1 |       2 | A1 | B1 |    2.8324339772699 |
-|       6 |       1 |       3 | A1 | B2 |   2.39408571976713 |
-|       6 |       1 |       4 | A1 | B2 |   1.68666453449319 |
-|       6 |       1 |       5 | A2 | B1 |   1.99039055282929 |
-|       6 |       1 |       6 | A2 | B1 |   1.50218708032942 |
-|       6 |       1 |       7 | A2 | B2 |   5.97196059545309 |
-|       6 |       1 |       8 | A2 | B2 |   4.23295289723905 |
-|       7 |       2 |       1 | A1 | B2 |   2.51200640443188 |
-|       7 |       2 |       2 | A1 | B2 |    3.1162896992602 |
-|       7 |       2 |       3 | A2 | B1 |  0.854473669612889 |
-|       7 |       2 |       4 | A2 | B1 |   5.23816718744868 |
-|       7 |       2 |       5 | A2 | B2 |   4.56751544726568 |
-|       7 |       2 |       6 | A2 | B2 |  0.816442836629361 |
-|       7 |       2 |       7 | A1 | B1 |  0.150720429062987 |
-|       7 |       2 |       8 | A1 | B1 |   1.27741954236188 |
-|       8 |       3 |       1 | A2 | B1 |   2.79555303427646 |
-|       8 |       3 |       2 | A2 | B1 |  -2.83712894684174 |
-|       8 |       3 |       3 | A2 | B2 |  0.452428781661049 |
-|       8 |       3 |       4 | A2 | B2 |   1.10214632716916 |
-|       8 |       3 |       5 | A1 | B1 | -0.502427439759417 |
-|       8 |       3 |       6 | A1 | B1 |  -3.38898278899096 |
-|       8 |       3 |       7 | A1 | B2 |   2.26205407460408 |
-|       8 |       3 |       8 | A1 | B2 |   -1.5220473321854 |
+| subj_id | list_id | item_id | A  | B  |      Y |
+|---------+---------+---------+----+----+--------|
+|       1 |       3 |       1 | A2 | B1 | -2.673 |
+|       1 |       3 |       2 | A2 | B1 |  2.531 |
+|       1 |       3 |       3 | A2 | B2 |  2.366 |
+|       1 |       3 |       4 | A2 | B2 |  4.456 |
+|       1 |       3 |       5 | A1 | B1 |  0.265 |
+|       1 |       3 |       6 | A1 | B1 |   1.44 |
+|       1 |       3 |       7 | A1 | B2 | -0.557 |
+|       1 |       3 |       8 | A1 | B2 |  0.917 |
+|       2 |       1 |       1 | A1 | B1 | -2.198 |
+|       2 |       1 |       2 | A1 | B1 | -3.634 |
+|       2 |       1 |       3 | A1 | B2 | -1.014 |
+|       2 |       1 |       4 | A1 | B2 | -4.473 |
+|       2 |       1 |       5 | A2 | B1 |  1.648 |
+|       2 |       1 |       6 | A2 | B1 |   2.72 |
+|       2 |       1 |       7 | A2 | B2 |   0.76 |
+|       2 |       1 |       8 | A2 | B2 |  1.585 |
+|       3 |       1 |       1 | A1 | B1 |  0.454 |
+|       3 |       1 |       2 | A1 | B1 | -0.138 |
+|       3 |       1 |       3 | A1 | B2 | -0.886 |
+|       3 |       1 |       4 | A1 | B2 |  0.099 |
+|       3 |       1 |       5 | A2 | B1 |  5.443 |
+|       3 |       1 |       6 | A2 | B1 |  3.553 |
+|       3 |       1 |       7 | A2 | B2 |   2.69 |
+|       3 |       1 |       8 | A2 | B2 |  4.347 |
+|       4 |       2 |       1 | A1 | B2 | -4.043 |
+|       4 |       2 |       2 | A1 | B2 |  0.627 |
+|       4 |       2 |       3 | A2 | B1 | -2.679 |
+|       4 |       2 |       4 | A2 | B1 | -3.004 |
+|       4 |       2 |       5 | A2 | B2 |  7.043 |
+|       4 |       2 |       6 | A2 | B2 | 10.191 |
+|       4 |       2 |       7 | A1 | B1 | -3.367 |
+|       4 |       2 |       8 | A1 | B1 | -0.783 |
+|       5 |       2 |       1 | A1 | B2 |  1.844 |
+|       5 |       2 |       2 | A1 | B2 |    0.2 |
+|       5 |       2 |       3 | A2 | B1 | -0.065 |
+|       5 |       2 |       4 | A2 | B1 | -2.914 |
+|       5 |       2 |       5 | A2 | B2 |  8.876 |
+|       5 |       2 |       6 | A2 | B2 | 10.925 |
+|       5 |       2 |       7 | A1 | B1 | -0.596 |
+|       5 |       2 |       8 | A1 | B1 |  1.171 |
+|       6 |       3 |       1 | A2 | B1 | -0.613 |
+|       6 |       3 |       2 | A2 | B1 |  1.434 |
+|       6 |       3 |       3 | A2 | B2 |  3.572 |
+|       6 |       3 |       4 | A2 | B2 |  0.232 |
+|       6 |       3 |       5 | A1 | B1 |  1.273 |
+|       6 |       3 |       6 | A1 | B1 |  3.293 |
+|       6 |       3 |       7 | A1 | B2 |  0.773 |
+|       6 |       3 |       8 | A1 | B2 |   5.84 |
+|       7 |       4 |       1 | A2 | B2 |  2.791 |
+|       7 |       4 |       2 | A2 | B2 |  5.298 |
+|       7 |       4 |       3 | A1 | B1 |  3.162 |
+|       7 |       4 |       4 | A1 | B1 |  1.887 |
+|       7 |       4 |       5 | A1 | B2 |  1.033 |
+|       7 |       4 |       6 | A1 | B2 |  4.463 |
+|       7 |       4 |       7 | A2 | B1 |  1.834 |
+|       7 |       4 |       8 | A2 | B1 | -0.883 |
+|       8 |       4 |       1 | A2 | B2 |  1.993 |
+|       8 |       4 |       2 | A2 | B2 |  6.679 |
+|       8 |       4 |       3 | A1 | B1 |  0.288 |
+|       8 |       4 |       4 | A1 | B1 |  0.828 |
+|       8 |       4 |       5 | A1 | B2 |  0.871 |
+|       8 |       4 |       6 | A1 | B2 |  5.725 |
+|       8 |       4 |       7 | A2 | B1 | -1.379 |
+|       8 |       4 |       8 | A2 | B1 | -1.743 |
 
 ** Identifying the model formula to be used in mixed-effects modeling
 
@@ -436,9 +433,7 @@ Simultaneous sampling of subjects and items can lead to complicated dependencies
   design_formula(threeway, n_subj = 16)
 #+END_SRC
 
-#+RESULTS:
-: ~Novelty * Addressee * Feedback + (1 + Novelty * Feedback | subj_id) + 
-:     (1 + Novelty * Addressee | item_id)
-
-
-
+#+BEGIN_EXAMPLE
+~Novelty * Addressee * Feedback + (1 + Novelty * Feedback | subj_id) + 
+     (1 + Novelty * Addressee | item_id)
+#+END_EXAMPLE
