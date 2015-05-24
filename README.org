@@ -427,7 +427,7 @@ The functions =gen_pop()= and =sim_norm()= can be used to simulate data from any
 
 ** Identifying the model formula to be used in mixed-effects modeling
 
-Simultaneous sampling of subjects and items can lead to complicated dependencies (see [[http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3881361][Barr, Levy, Scheepers, and Tily, 2013]]).  One appealing way to account for these dependencies is through linear mixed-effects modeling, which can be accomplished using the lme4 package in R.  The function =design_formula()= in funfact gives you the model formula that is appropriate for analyzed the data in your sample.
+Simultaneous sampling of subjects and items can lead to complicated dependencies (see [[http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3881361][Barr, Levy, Scheepers, and Tily, 2013]]).  One appealing way to account for these dependencies is through linear mixed-effects modeling, which can be accomplished using the lme4 package in R.  The function =design_formula()= in funfact gives you the model formula that is appropriate for analyzing the data in your sample.
 
 #+BEGIN_SRC R :results output
   design_formula(threeway, n_subj = 16)
