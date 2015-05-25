@@ -19,6 +19,9 @@ gen_pop <- function(design_args,
                     var_range = c(0, 3),
                     err_range = c(1, 3)) {
     tdat <- trial_lists(design_args, n_subj)
+    if ("n_rep" %in% colnames(tdat)) {
+        design_args[["ivs"]] <- c(as.list(design_args[["ivs"]]), list(n_rep = unique(tdat[["n_rep"]])))
+    } else {}
     forms <- design_formula(design_args, n_subj, lme4_format = FALSE)
     tnames <- lapply(forms, function(x) term_names(design_args, x))
     err_var <- runif(1, err_range[1], err_range[2])

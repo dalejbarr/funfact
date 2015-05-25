@@ -168,8 +168,9 @@ stim_lists <- function(design_args,
 
     if (n_rep > 1) {
         plists <- lapply(plists, function(x) {
-                             cbind(n_rep = paste0("r", rep(seq_len(n_rep), each = nrow(x))),
-                                   x[rep(seq_len(nrow(x)), n_rep), , drop = FALSE])
+                             data.frame(n_rep = as.character(paste0("r", rep(seq_len(n_rep), each = nrow(x)))),
+                                        x[rep(seq_len(nrow(x)), n_rep), , drop = FALSE],
+                                        check.names = FALSE, stringsAsFactors = FALSE)
                          })
     } else {}
 
@@ -286,10 +287,17 @@ compose_data <- function(design_args,
         res_vec
     }
 
-    iv_names <- names(design_args[["ivs"]])
+    ivs_nrep <- design_args[["ivs"]]
+    if (!is.null(design_args[["n_rep"]])) {
+        if (design_args[["n_rep"]] > 1) {
+            ivs_nrep <- c(as.list(design_args[["ivs"]]),
+                          list(n_rep = paste0("r", seq_len(design_args[["n_rep"]]))))
+        } else {}
+    } else {}
+    iv_names <- names(ivs_nrep)
     tlists <- trial_lists(design_args, subjects = nrow(subj_rmx))
 
-    cont <- as.list(rep("contr.dev", length(design_args[["ivs"]])))
+    cont <- as.list(rep("contr.dev", length(ivs_nrep)))
     names(cont) <- iv_names
 
     mmx <- model.matrix(as.formula(paste0("~", paste(iv_names, collapse = "*"))),
