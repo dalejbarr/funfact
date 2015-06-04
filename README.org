@@ -43,7 +43,7 @@ For information on how these elements should be defined, see the examples in the
   library("funfact")
 #+END_SRC
 
-The function =stim_lists()= generates a set of counterbalanced stimulus presentation lists for any given (full) factorial design.  A "stimulus presentation list" determines which items will be presented to a given subject, and in which condition.  The generation process ensures that each subject seems the same number of items as well as the same number of items in each condition.  It also ensures that each item is presented the same number of times, in each condition, across subjects.
+The function =stim_lists()= generates a set of counterbalanced stimulus presentation lists for any given (full) factorial design.  A "stimulus presentation list" determines which items will be presented to a given subject, and in which condition.  The generation process ensures that each subject sees the same number of items as well as the same number of items in each condition.  It also ensures that each item is presented the same number of times, in each condition, across subjects.
 
 You determine the experiment design by specifying arguments within a list object.
 
