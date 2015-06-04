@@ -5,7 +5,7 @@
 \title{Generate population for data simulation}
 \usage{
 gen_pop(design_args, n_subj = NULL, fixed_ranges = NULL, var_range = c(0,
-  3), err_range = c(1, 3))
+  3), err_range = c(0, 6))
 }
 \arguments{
 \item{design_args}{list specifying experimental design (see \code{\link{stim_lists}}); for best results, n_item should be 2*minimum number of items needed for the design}

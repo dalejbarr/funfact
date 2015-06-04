@@ -17,7 +17,7 @@ gen_pop <- function(design_args,
                     n_subj = NULL,
                     fixed_ranges = NULL,                    
                     var_range = c(0, 3),
-                    err_range = c(1, 3)) {
+                    err_range = c(0, 6)) {
     tdat <- trial_lists(design_args, n_subj)
     if ("n_rep" %in% colnames(tdat)) {
         design_args[["ivs"]] <- c(as.list(design_args[["ivs"]]), list(n_rep = unique(tdat[["n_rep"]])))
