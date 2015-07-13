@@ -103,7 +103,7 @@ term_names <- function(design_args,
                        contr_type = "contr.dev") {
     check_design_args(design_args)
     plists <- stim_lists(design_args)
-    cont <- as.list(rep("contr.dev", length(design_args[["ivs"]])))
+    cont <- as.list(rep(contr_type, length(design_args[["ivs"]])))
     names(cont) <- names(design_args[["ivs"]])
     if (is.null(design_formula)) design_formula <- as.formula(paste0("~",
                                                                paste(names(design_args[["ivs"]]),
