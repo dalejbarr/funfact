@@ -248,6 +248,7 @@ trial_lists <- function(design_args,
 #' @param subj_rmx matrix of by-subject random effects
 #' @param item_rmx matrix of by-item random effects
 #' @param verbose give debugging info (default = \code{FALSE})
+#' @param contr_type contrast type (default "contr.dev"); see ?contrasts
 #'
 #' @details This will add together all of the fixed and random effects
 #' according to the linear model specified by the design.  Note,
@@ -261,7 +262,8 @@ compose_data <- function(design_args,
                          fixed = NULL,
                          subj_rmx = NULL,
                          item_rmx = NULL,
-                         verbose = FALSE) {
+                         verbose = FALSE,
+                         contr_type = "contr.dev") {
     ## utility function for doing matrix multiplication
     multiply_mx <- function(des_mx, rfx, row_ix, design_args) {
         ## make sure all cols in rfx are represented in des_mx
@@ -297,7 +299,7 @@ compose_data <- function(design_args,
     iv_names <- names(ivs_nrep)
     tlists <- trial_lists(design_args, subjects = nrow(subj_rmx))
 
-    cont <- as.list(rep("contr.dev", length(ivs_nrep)))
+    cont <- as.list(rep(contr_type, length(ivs_nrep)))
     names(cont) <- iv_names
 
     mmx <- model.matrix(as.formula(paste0("~", paste(iv_names, collapse = "*"))),
