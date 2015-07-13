@@ -97,7 +97,7 @@ sim_norm <- function(design_args,
                         fixed = params[["fixed"]],
                         subj_rmx = rfx[["subj_rfx"]],
                         item_rmx = rfx[["item_rfx"]],
-                        contr_type)
+                        contr_type = contr_type)
     dat[["Y"]] <- dat[["Y"]] + rnorm(nrow(dat), sd = sqrt(params[["err_var"]]))
     return(dat)
 }
