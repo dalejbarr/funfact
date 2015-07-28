@@ -14,6 +14,8 @@ funfact can be used for the following purposes:
 
 Each of these purposes is illustrated in one of the sections below.
 
+In addition, funfact provides convenience functions =contr.dev()= and =with_dev_pred()= for creating deviation-coded predictors for use in regression-based analyses of factorial designs.  See http://talklab.psy.gla.ac.uk/tvw/catpred for discussion on coding schemes.
+
 To install funfact, type the following commands into the R console:
 
 #+BEGIN_SRC R :eval never :exports code
