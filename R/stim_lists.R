@@ -264,79 +264,96 @@ compose_data <- function(design_args,
                          item_rmx = NULL,
                          verbose = FALSE,
                          contr_type = "contr.dev") {
-    ## utility function for doing matrix multiplication
-    multiply_mx <- function(des_mx, rfx, row_ix, design_args) {
-        ## make sure all cols in rfx are represented in des_mx
-        diff_cols <- setdiff(colnames(rfx), colnames(des_mx))
-        if (length(diff_cols) != 0) {
-            stop("column(s) '", paste(diff_cols, collapse = ", "),
-                 "' not represented in terms '",
-                 paste(term_names(design_args[["ivs"]],
-                                  design_args[["between_subj"]],
-                                  design_args[["between_item"]]),
-                       collapse = ", "), "'")
-        } else {}
 
-        reduced_des <- des_mx[, colnames(rfx), drop = FALSE]
+  ## utility function for doing matrix multiplication
+  multiply_mx <- function(des_mx, rfx, row_ix, design_args) {
+    ## make sure all cols in rfx are represented in des_mx
+    diff_cols <- setdiff(colnames(rfx), colnames(des_mx))
+    if (length(diff_cols) != 0) {
+      stop("column(s) '", paste(diff_cols, collapse = ", "),
+           "' not represented in terms '",
+           paste(term_names(design_args[["ivs"]],
+                            design_args[["between_subj"]],
+                            design_args[["between_item"]]),
+                 collapse = ", "), "'")
+    } else {}
 
-        t_rfx <- t(rfx)
-        res_vec <- vector("numeric", length(row_ix))
-        for (ix in unique(row_ix)) {
-            lvec <- row_ix == ix
-            res_vec[lvec] <- c(reduced_des[lvec, , drop = FALSE] %*%
-                                   t_rfx[, ix, drop = FALSE])
-        }
-        res_vec
+    reduced_des <- des_mx[, colnames(rfx), drop = FALSE]
+
+    t_rfx <- t(rfx)
+    res_vec <- vector("numeric", length(row_ix))
+    for (ix in unique(row_ix)) {
+      lvec <- row_ix == ix
+      res_vec[lvec] <- c(reduced_des[lvec, , drop = FALSE] %*%
+                         t_rfx[, ix, drop = FALSE])
     }
+    res_vec
+  }
 
-    ivs_nrep <- design_args[["ivs"]]
-    if (!is.null(design_args[["n_rep"]])) {
-        if (design_args[["n_rep"]] > 1) {
-            ivs_nrep <- c(as.list(design_args[["ivs"]]),
-                          list(n_rep = paste0("r", seq_len(design_args[["n_rep"]]))))
-        } else {}
+  ivs_nrep <- design_args[["ivs"]]
+  if (!is.null(design_args[["n_rep"]])) {
+    if (design_args[["n_rep"]] > 1) {
+      ivs_nrep <- c(as.list(design_args[["ivs"]]),
+                    list(n_rep = paste0("r", seq_len(design_args[["n_rep"]]))))
     } else {}
-    iv_names <- names(ivs_nrep)
+  } else {}
+  iv_names <- names(ivs_nrep)
+  if (is.matrix(subj_rmx)) {
     tlists <- trial_lists(design_args, subjects = nrow(subj_rmx))
+  } else {
+    tlists <- trial_lists(design_args, subjects = subj_rmx)
+  }
 
-    cont <- as.list(rep(contr_type, length(ivs_nrep)))
-    names(cont) <- iv_names
+  cont <- as.list(rep(contr_type, length(ivs_nrep)))
+  names(cont) <- iv_names
 
-    mmx <- model.matrix(as.formula(paste0("~", paste(iv_names, collapse = "*"))),
-                        tlists,
-                        contrasts.arg = cont)
+  mmx <- model.matrix(as.formula(paste0("~", paste(iv_names, collapse = "*"))),
+                      tlists,
+                      contrasts.arg = cont)
 
-    if (is.null(fixed)) {
-        fixed <- runif(ncol(mmx), -3, 3)
-        names(fixed) <- colnames(mmx)
-    } else {}
+  if (is.null(fixed)) {
+    fixed <- runif(ncol(mmx), -3, 3)
+    names(fixed) <- colnames(mmx)
+  } else {}
 
-    ## fixed component of Y
-    fix_y <- c(mmx %*% fixed) # fixed component of Y
+  ## fixed component of Y
+  fix_y <- c(mmx %*% fixed) # fixed component of Y
 
-    if (is.null(subj_rmx)) {
-        stop("Autogeneration of subj_rmx not implemented yet; please define 'subj_rmx'")
-    } else {}
+  if (is.matrix(subj_rmx)) {
+    ## stop("Autogeneration of subj_rmx not implemented yet; please define 'subj_rmx'")
     if (nrow(subj_rmx) != length(unique(tlists[["subj_id"]]))) {
-        stop("Argument 'subj_rmx' has ", nrow(subj_rmx), " rows; needs ",
-             length(unique(tlists[["subj_id"]])))
+      stop("Argument 'subj_rmx' has ", nrow(subj_rmx), " rows; needs ",
+           length(unique(tlists[["subj_id"]])))
     } else {}
     sre <- multiply_mx(mmx, subj_rmx, tlists[["subj_id"]], design_args)
+  } else {
+    sre <- NULL
+  }
 
-    if (is.null(item_rmx)) {
-        stop("Autogeneration of item_rmx not implemented yet; please define 'item_rmx'")
-    } else {}
+  if (is.matrix(item_rmx)) {
+    ## stop("Autogeneration of item_rmx not implemented yet; please define 'item_rmx'")
     if (nrow(item_rmx) != length(unique(tlists[["item_id"]]))) {
-        stop("Argument 'item_rmx' has ", nrow(item_rmx), " rows; needs ",
-             length(unique(tlists[["item_id"]])))
+      stop("Argument 'item_rmx' has ", nrow(item_rmx), " rows; needs ",
+           length(unique(tlists[["item_id"]])))
     } else {}
     ire <- multiply_mx(mmx, item_rmx, tlists[["item_id"]], design_args)
-    ## err <- rnorm(nrow(tlists), sd = sqrt(err_var))
-    comb_mx <- matrix(nrow = nrow(tlists), ncol = 0)
-    if (verbose) {
-        ## comb_mx <- cbind(fix_y = fix_y, sre = sre, ire = ire, err = err)
-        comb_mx <- cbind(fix_y = fix_y, sre = sre, ire = ire)
-    } else {}
-    ## cbind(tlists, Y = fix_y + sre + ire + err, comb_mx)
-    cbind(tlists, Y = fix_y + sre + ire, comb_mx)
+  } else {
+    ire <- NULL
+  }
+  
+  comb_mx <- matrix(nrow = nrow(tlists), ncol = 0)
+  if (verbose) {
+    ## comb_mx <- cbind(fix_y = fix_y, sre = sre, ire = ire, err = err)
+    comb_mx <- cbind(fix_y = fix_y, sre = sre, ire = ire)
+  } else {}
+  ## cbind(tlists, Y = fix_y + sre + ire + err, comb_mx)
+
+  yvals <- fix_y
+  if (!is.null(sre)) {
+    yvals <- yvals + sre
+  }
+  if (!is.null(ire)) {
+    yvals <- yvals + ire
+  }
+  cbind(tlists, Y = yvals, comb_mx)
 }

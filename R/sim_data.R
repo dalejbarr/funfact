@@ -89,25 +89,29 @@ sim_norm <- function(design_args,
                      params,
                      contr_type = "contr.dev",
                      verbose = FALSE) {
-    required_elements <- c("fixed", "subj_rfx", "item_rfx", "err_var")
-    missing_elements <- setdiff(required_elements, names(params))
-    if (length(missing_elements) > 0) {
-        stop("mcr.data was missing element(s): ",
-             paste(missing_elements, collapse = ", "))
-    } else {}
-    if (is.null(design_args[["n_item"]])) {
-        stop("'n_item' not specified in 'design_args'")
-    } else {}
-    rfx <- mapply(function(x, n) {
-        MASS::mvrnorm(n, mu = rep(0, ncol(x)), x)
-    }, params[c("subj_rfx", "item_rfx")],
-           c(n_subj, design_args[["n_item"]]), SIMPLIFY = FALSE)
-    dat <- compose_data(design_args,
-                        fixed = params[["fixed"]],
-                        subj_rmx = rfx[["subj_rfx"]],
-                        item_rmx = rfx[["item_rfx"]],
-                        contr_type = contr_type, verbose = verbose)
-    dat[["err"]] <- rnorm(nrow(dat), sd = sqrt(params[["err_var"]]))
-    dat[["Y"]] <- dat[["Y"]] + dat[["err"]]
-    return(dat)
+  required_elements <- c("fixed", "subj_rfx", "item_rfx", "err_var")
+  missing_elements <- setdiff(required_elements, names(params))
+  if (length(missing_elements) > 0) {
+    stop("mcr.data was missing element(s): ",
+         paste(missing_elements, collapse = ", "))
+  } else {}
+  if (is.null(design_args[["n_item"]])) {
+    stop("'n_item' not specified in 'design_args'")
+  } else {}
+  rfx <- mapply(function(x, n) {
+    if (!is.null(x)) {
+      MASS::mvrnorm(n, mu = rep(0, ncol(x)), x)
+    } else {
+      n
+    }
+  }, params[c("subj_rfx", "item_rfx")],
+  c(n_subj, design_args[["n_item"]]), SIMPLIFY = FALSE)
+  dat <- compose_data(design_args,
+                      fixed = params[["fixed"]],
+                      subj_rmx = rfx[["subj_rfx"]],
+                      item_rmx = rfx[["item_rfx"]],
+                      contr_type = contr_type, verbose = verbose)
+  dat[["err"]] <- rnorm(nrow(dat), sd = sqrt(params[["err_var"]]))
+  dat[["Y"]] <- dat[["Y"]] + dat[["err"]]
+  return(dat)
 }
