@@ -16,7 +16,6 @@ contr.dev <- function(n, base = 1, contrasts = TRUE) {
   } else {
     levels <- n
   }
-                                        #mx <- apply(contr.treatment(n), 2, function(x) {x-mean(x)})
   ctreat <- contr.treatment(levels, base, contrasts)
   mx <- apply(ctreat, 2, scale, scale = FALSE)
   dimnames(mx) <- dimnames(ctreat)
@@ -103,12 +102,19 @@ term_names <- function(design_args,
                        contr_type = "contr.dev") {
   check_design_args(design_args)
   plists <- stim_lists(design_args)
-  cont <- as.list(rep(contr_type, length(design_args[["ivs"]])))
+
+  cont <- lapply(design_args[["ivs"]], function(.x) {
+    do.call(contr_type, list(.x))
+  })
+  ##cont <- as.list(rep(contr_type, length(design_args[["ivs"]])))
+  
   names(cont) <- names(design_args[["ivs"]])
-  if (is.null(design_formula)) design_formula <- as.formula(paste0("~",
-                                                                   paste(names(design_args[["ivs"]]),
-                                                                         collapse = " * ")))
-  suppressWarnings(mmx <- model.matrix(design_formula, plists, contrasts.arg = cont))
+  if (is.null(design_formula))
+    design_formula <- as.formula(paste0("~",
+                                        paste(names(design_args[["ivs"]]),
+                                              collapse = " * ")))
+  suppressWarnings(mmx <- model.matrix(design_formula, plists,
+                                       contrasts.arg = cont))
   return(colnames(mmx))
 }
 
