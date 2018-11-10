@@ -304,7 +304,11 @@ compose_data <- function(design_args,
     tlists <- trial_lists(design_args, subjects = subj_rmx)
   }
 
-  cont <- as.list(rep(contr_type, length(ivs_nrep)))
+  ## 
+  cont <- lapply(design_args[["ivs"]], function(.x) {
+    do.call(contr_type, list(.x))
+  })
+  ## cont <- as.list(rep(contr_type, length(ivs_nrep)))
   names(cont) <- iv_names
 
   mmx <- model.matrix(as.formula(paste0("~", paste(iv_names, collapse = "*"))),

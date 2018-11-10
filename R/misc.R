@@ -70,9 +70,18 @@ with_dev_pred <- function(dat, iv_names = NULL) {
     iv_names <- names(dat)
   } else {}
   mform <- as.formula(paste0("~", paste(iv_names, collapse = "+")))
-  cont <- as.list(rep("contr.dev", length(iv_names)))
+
+  cont <- lapply(iv_names, function(.x) {
+    if (is.factor(dat[[.x]])) {
+      contr.dev(levels(dat[[.x]]))
+    } else {
+      contr.dev(unique(dat[[.x]]))
+    }
+  })
   names(cont) <- iv_names
-  cbind(dat, model.matrix(mform, dat, contrasts.arg = cont)[, -1])
+
+  mmx <- model.matrix(mform, dat, contrasts.arg = cont)[, -1, drop = FALSE]
+  cbind(dat, mmx)
 }
 
 check_design_args <- function(design_args) {
@@ -106,7 +115,6 @@ term_names <- function(design_args,
   cont <- lapply(design_args[["ivs"]], function(.x) {
     do.call(contr_type, list(.x))
   })
-  ##cont <- as.list(rep(contr_type, length(design_args[["ivs"]])))
   
   names(cont) <- names(design_args[["ivs"]])
   if (is.null(design_formula))
