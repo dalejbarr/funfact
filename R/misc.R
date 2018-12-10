@@ -75,7 +75,7 @@ with_dev_pred <- function(dat, iv_names = NULL) {
     if (is.factor(dat[[.x]])) {
       contr.dev(levels(dat[[.x]]))
     } else {
-      contr.dev(unique(dat[[.x]]))
+      contr.dev(sort(unique(dat[[.x]])))
     }
   })
   names(cont) <- iv_names
