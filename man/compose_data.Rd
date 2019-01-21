@@ -4,8 +4,8 @@
 \alias{compose_data}
 \title{Compose response data from fixed and random effects}
 \usage{
-compose_data(design_args, fixed = NULL, subj_rmx = NULL, item_rmx = NULL,
-  verbose = FALSE, contr_type = "contr.dev")
+compose_data(design_args, fixed = NULL, subj_rmx = NULL,
+  item_rmx = NULL, verbose = FALSE, contr_type = "contr.dev")
 }
 \arguments{
 \item{design_args}{List containing information about the experiment

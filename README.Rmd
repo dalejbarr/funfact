@@ -1,0 +1,127 @@
+---
+title: funfact
+---
+
+funfact is an R package that makes it easier to plan, simulate, and analyze studies with factorial designs.  It is intended for use with experiments in which multiple stimulus items are presented to multiple subjects.
+
+funfact can be used for the following purposes:
+
+- generating counterbalanced stimulus lists for any arbitrary factorial design;
+- generating a full list of trials corresponding to the realization of an experiment;
+- simulating data for any type of full factorial design;
+- generating a design formula for use in mixed model analysis in `lme4`.
+
+Each of these purposes is illustrated in one of the sections below.
+
+In addition, funfact provides convenience functions `contr.dev()` and `with_dev_pred()` for creating deviation-coded predictors for use in regression-based analyses of factorial designs.  See http://talklab.psy.gla.ac.uk/tvw/catpred for discussion on coding schemes.
+
+## funfact basics
+
+funfact conceptually separates the *design* of an experiment from the *realization* of that experiment through the sampling of subjects.  
+
+The design of an experiment is represented using a list object with the following named elements:
+
+| Element Name   | Description                                                                                  |
+|----------------+----------------------------------------------------------------------------------------------|
+| `ivs`          | Names and levels of the independent variables (IVs) that form the main factors in the design |
+| `between_subj` | Names of any IVs administered between subjects                                               |
+| `between_item` | Names of any IVs administered between items                                                  |
+| `n_item`       | Number of stimulus items                                                                     |
+| `n_rep`        | Number of times each item should be presented to each participant (default 1)                |
+
+For information on how these elements should be defined, see the examples in the next section.
+
+## Generating counterbalanced stimulus presentation lists
+
+```{r, echo = FALSE}
+  library("funfact")
+```
+
+The function `stim_lists()` generates a set of counterbalanced stimulus presentation lists for any given (full) factorial design.  A "stimulus presentation list" determines which items will be presented to a given subject, and in which condition.  The generation process ensures that each subject sees the same number of items as well as the same number of items in each condition.  It also ensures that each item is presented the same number of times, in each condition, across subjects.
+
+You determine the experiment design by specifying arguments within a list object.
+
+### 2x2 design with both factors within-subjects and within-items
+
+```{r}
+  ## 2x2 within-subject within-item factorial design
+  ## NB: here, the two IVs are A and B, each having 2 levels
+  wswi_design <- list(ivs = c(A = 2, B = 2),
+                      n_item = 8)
+
+  stim_lists(wswi_design)
+```
+
+### A more complicated, two-way mixed design
+
+```{r}
+  mixed_design <- list(ivs = c(A = 2, B = 2),
+                       between_subj = c("A"),
+                       between_item = c("B"),
+                       n_item = 8)
+
+  stim_lists(mixed_design)
+```
+
+### 2x3 design, one factor between
+
+```{r}
+  ## note that IVs can also be specified as elements of a list, each
+  ## key/value pair being the variable name and a vector with the levels
+  ## of that variable
+  bswi_2by3 <- list(ivs = list(Group = c("Child", "Adult"),
+                        Condition = c("Control", "High", "Low")),
+                    between_subj = c("Group"),
+                    n_item = 6)
+
+  stim_lists(bswi_2by3)
+```
+
+### 3-way mixed design
+
+The design below is a 3-way design based on Gann & Barr (2014).
+
+```{r}
+  threeway <- list(ivs = list(Novelty = c("New", "Old"),
+                       Addressee = c("Same", "Diff"),
+                       Feedback = c("Yes", "No")),
+                   between_subj = c("Addressee"),
+                   between_item = c("Feedback"),
+                   n_item = 16)
+
+  stim_lists(threeway)
+```
+
+## Generating trial lists
+
+While stimulus presentation lists determine which items a subject sees in which condition, trial lists randomly assign an equal number of subjects to each list.
+
+```{r}
+  wswi_design <- list(ivs = c(A = 2, B = 2),
+                      n_item = 8)
+
+  trial_lists(wswi_design, subjects = 8)
+```
+
+## Simulating data from a factorial design
+
+The functions `gen_pop()` and `sim_norm()` can be used to simulate data from any type of factorial design.
+
+`gen_pop()` is used to generate population parameters to be used in the simulation.  `sim_norm()` takes a sample from the population defined by `gen_pop()`, as the example below illustrates.
+
+```{r}
+  my_design <- list(ivs = c(A = 2, B = 2),
+                    n_item = 8)
+  popdata <- gen_pop(my_design, 8)
+
+  my_data <- sim_norm(my_design, 8, popdata)
+  my_data
+```
+
+## Identifying the model formula to be used in mixed-effects modeling
+
+Simultaneous sampling of subjects and items can lead to complicated dependencies (see [Barr, Levy, Scheepers, and Tily, 2013](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3881361)).  One appealing way to account for these dependencies is through linear mixed-effects modeling, which can be accomplished using the lme4 package in R.  The function =design_formula()= in funfact gives you the model formula that is appropriate for analyzing the data in your sample.
+
+```{r}
+design_formula(threeway, n_subj = 16)
+```

@@ -4,8 +4,8 @@
 \alias{gen_pop}
 \title{Generate population for data simulation}
 \usage{
-gen_pop(design_args, n_subj = NULL, fixed_ranges = NULL, var_range = c(0,
-  3), err_range = c(0, 6))
+gen_pop(design_args, n_subj = NULL, fixed_ranges = NULL,
+  var_range = c(0, 3), err_range = c(0, 6))
 }
 \arguments{
 \item{design_args}{list specifying experimental design (see
