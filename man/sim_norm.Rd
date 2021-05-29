@@ -4,8 +4,13 @@
 \alias{sim_norm}
 \title{Sample data from population with normal error variance}
 \usage{
-sim_norm(design_args, n_subj, params, contr_type = "contr.dev",
-  verbose = FALSE)
+sim_norm(
+  design_args,
+  n_subj,
+  params,
+  contr_type = "contr.dev",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{design_args}{experiment design (see

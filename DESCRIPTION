@@ -3,9 +3,14 @@ Title: Functions for factorial experiments
 Description: Provides functionality for planning and analyzing
         factorially-designed experiments involving sampling of subjects
         and stimulus materials (items).
-Version: 0.300
+Version: 0.0.1.9000
 License: GPL-2
 Author: Dale J. Barr <dalejbarr3@gmail.com>
 Maintainer: Dale J. Barr <dalejbarr3@gmail.com>
-Imports: clusterGeneration, MASS
-RoxygenNote: 6.1.1
+Imports: 
+    clusterGeneration,
+    MASS,
+    Rcpp
+RoxygenNote: 7.1.1
+LinkingTo: 
+    Rcpp

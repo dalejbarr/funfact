@@ -4,8 +4,7 @@
 \alias{term_names}
 \title{Get names for predictors in factorial design}
 \usage{
-term_names(design_args, design_formula = NULL,
-  contr_type = "contr.dev")
+term_names(design_args, design_formula = NULL, contr_type = "contr.dev")
 }
 \arguments{
 \item{design_args}{A list with experimental design information (see \code{link{stim_lists}})}

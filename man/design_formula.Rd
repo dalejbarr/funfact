@@ -4,8 +4,7 @@
 \alias{design_formula}
 \title{Get the GLM formula for a factorially-designed experiment}
 \usage{
-design_formula(design_args, n_subj = NULL, dv_name = NULL,
-  lme4_format = TRUE)
+design_formula(design_args, n_subj = NULL, dv_name = NULL, lme4_format = TRUE)
 }
 \arguments{
 \item{design_args}{A list with experimental design information (see \code{link{stim_lists}})}
