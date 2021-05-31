@@ -5,14 +5,58 @@
 
 using namespace Rcpp;
 
+// generic_square
+CharacterMatrix generic_square(CharacterVector labels);
+RcppExport SEXP _funfact_generic_square(SEXP labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type labels(labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(generic_square(labels));
+    return rcpp_result_gen;
+END_RCPP
+}
+// digram_square_even
+CharacterMatrix digram_square_even(CharacterVector labels);
+RcppExport SEXP _funfact_digram_square_even(SEXP labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type labels(labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(digram_square_even(labels));
+    return rcpp_result_gen;
+END_RCPP
+}
+// digram_square_odd
+List digram_square_odd(CharacterVector labels);
+RcppExport SEXP _funfact_digram_square_odd(SEXP labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type labels(labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(digram_square_odd(labels));
+    return rcpp_result_gen;
+END_RCPP
+}
 // alimena_square
-List alimena_square(CharacterVector labels);
+CharacterMatrix alimena_square(CharacterVector labels);
 RcppExport SEXP _funfact_alimena_square(SEXP labelsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterVector >::type labels(labelsSEXP);
     rcpp_result_gen = Rcpp::wrap(alimena_square(labels));
+    return rcpp_result_gen;
+END_RCPP
+}
+// all_permutations
+CharacterMatrix all_permutations(CharacterVector labels);
+RcppExport SEXP _funfact_all_permutations(SEXP labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type labels(labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(all_permutations(labels));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -31,7 +75,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_funfact_generic_square", (DL_FUNC) &_funfact_generic_square, 1},
+    {"_funfact_digram_square_even", (DL_FUNC) &_funfact_digram_square_even, 1},
+    {"_funfact_digram_square_odd", (DL_FUNC) &_funfact_digram_square_odd, 1},
     {"_funfact_alimena_square", (DL_FUNC) &_funfact_alimena_square, 1},
+    {"_funfact_all_permutations", (DL_FUNC) &_funfact_all_permutations, 1},
     {"_funfact_prs_factor", (DL_FUNC) &_funfact_prs_factor, 3},
     {NULL, NULL, 0}
 };

@@ -11,60 +11,22 @@ using std::vector;
 using std::string;
 using std::size_t;
 
-bool is_prime(const int &n) {
-  bool result = true;
-
-  if (n >= 2) {
-    for (int i = 2; i <= sqrt(n); i++) {
-      if (!(n % i)) {
-	result = false;
-	break;
-      }
-    }
-  } else {
-    result = false;
-  }
-
-  return result;
+int factorial(int n) {
+  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
-// see Alimena, B. S. (1962)
-// "A Method of Determining Unbiased Distribution in the Latin Square"
-// Psychometrika, 27(2).
-// counterbalance all immediate and remote effects
-// only works if n + 1 is prime (e.g., 2, 4, 6, 10, 12, 16, 18)
-vector<vector<int>> alimena_square_intern(const int &n)
-{
-  if (is_prime(n + 1)) {
-    // allocate
-    size_t nn = (size_t) n;
-    vector<vector<int>> result(n);
-    for (size_t i = 0; i < (size_t) n; i++) {
-      result[i] = vector<int>(n);
-    }
+vector<vector<string>> all_perm(vector<string> labels) {
+  size_t nperms = (size_t) factorial(labels.size());
+  vector<vector<string>> result(nperms);
 
-    // for each column...
-    for (size_t j = 0; j < nn; j++) {
-      size_t stepsize = j + 1;
-      size_t offset = 0;
-      for (size_t i = 0; i < nn; i++) {
-	size_t thisrow = offset + (i == 0 ? j : stepsize);
-	offset = (thisrow % nn) - (thisrow >= nn);
-	//cout << offset << "/" <<
-	//thisrow << ", j=" << j << " (i=" << i << "): " << i << endl;
-	if (offset < nn) {
-	  result[offset][j] = (int) i;
-	} else {
-	  // TODO: throw an error
-	  cout << "ERROR! skipped" << endl;
-	}
-      }
-    }
-    
-    return result;
-  } else {
-    return vector<vector<int>>{};
+  sort(labels.begin(), labels.end());
+  result[0] = labels;
+  for (size_t i = 1; i < nperms; i++) {
+    next_permutation(labels.begin(), labels.end());
+    result[i] = labels;
   }
+  
+  return result;
 }
 
 // generate PseudoRandom Sequence of labels
@@ -115,3 +77,4 @@ vector<vector<string>> prs_factor_intern(const vector<string> &labels,
   
   return result;
 }
+

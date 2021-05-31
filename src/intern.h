@@ -11,6 +11,8 @@ prs_factor_intern(const std::vector<std::string> &labels,
 		  const int &maxrun,
 		  RandIx * prand);
 
-std::vector<std::vector<int>> alimena_square_intern(const int &n);
+std::vector<std::vector<std::string>> all_perm(std::vector<std::string> labels);
+
+int factorial(int n);
 
 #endif
