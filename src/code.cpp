@@ -18,6 +18,10 @@ using std::endl;
 
 RandIx_R rand_R;
 
+//' Generate a generic latin square
+//'
+//' @param labels The labels to be filled in as values in the latin square.
+//' @export
 // [[Rcpp::export]]
 CharacterMatrix generic_square(CharacterVector labels) {
   CharacterMatrix result(labels.size(), labels.size());
@@ -32,6 +36,10 @@ CharacterMatrix generic_square(CharacterVector labels) {
   return result;
 }
 
+//' Generate a digram-balanced latin square for even n
+//'
+//' @param labels The labels to be filled in as values in the latin square.
+//' @export
 // [[Rcpp::export]]
 CharacterMatrix digram_square_even(CharacterVector labels) {
   CharacterMatrix result(labels.size(), labels.size());
@@ -49,6 +57,10 @@ CharacterMatrix digram_square_even(CharacterVector labels) {
   return result;
 }
 
+//' Generate a digram-balanced latin squares for odd n
+//' 
+//' @param labels The labels to be filled in as values in the latin square.
+//' @export
 // [[Rcpp::export]]
 List digram_square_odd(CharacterVector labels) {
   CharacterMatrix result1(labels.size(), labels.size());
@@ -71,6 +83,10 @@ List digram_square_odd(CharacterVector labels) {
   return result;
 }
 
+//' Generate an alimena square
+//'
+//' @param labels The labels to be filled in as values in the latin square.
+//' @export
 // [[Rcpp::export]]
 CharacterMatrix alimena_square(CharacterVector labels) {
 
